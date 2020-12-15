@@ -22,7 +22,7 @@ var user = new Schema({
     },
     phoneNumber: {
         type: String,
-        unique: true,
+
     },
     deviceToken: {
         type: String,

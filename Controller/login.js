@@ -24,6 +24,7 @@ function login(headers, body, userdata) {
             userModel.findOne(criteria, function (err, result) {
                 if (err) reject(responses.unknown_error())
                 else if (result != null) {
+                    console.log(result, "result")
                     userModel.findOneAndUpdate(criteria, { $set: payloadData }, { new: true }, function (uperr, upresult) {
                         if (uperr) reject(responses.unknown_error())
                         resolve(responses.verification_successfully('Login successfully', upresult))
@@ -37,6 +38,7 @@ function login(headers, body, userdata) {
                 User.save().then(res => {
                     resolve(responses.verification_successfully('Login successfully', res))
                 }).catch(err => {
+                    console.log(err, "--err")
                     reject(responses.unknown_error())
                 })
             })
