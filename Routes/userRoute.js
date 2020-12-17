@@ -92,4 +92,48 @@ router.put('/editContact', upload.single('image'), commonFunctions.userTokenVali
         });
     }
 });
+
+/*
+==============GEt profile=================
+ */
+
+router.get('/getprofile', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        RegisterLoginController.getprofile(req.headers, req.body, req.body.userdata).then(function (getprofile) {
+            res.status(200).send(getprofile);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+
+/**
+ * =============edit profile =================
+ */
+
+router.put('/editprofile', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        RegisterLoginController.editprofile(req.headers, req.body, req.body.userdata).then(function (editprofile) {
+            res.status(200).send(editprofile);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
 module.exports = router

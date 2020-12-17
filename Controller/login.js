@@ -8,7 +8,7 @@ ObjectId = require('mongodb').ObjectID;
 
 let _ = require('underscore');
 module.exports = {
-    login
+    login, getprofile, editprofile
 }
 
 function login(headers, body, userdata) {
@@ -45,6 +45,34 @@ function login(headers, body, userdata) {
 
 
 
+        } catch (err) {
+            reject(responses.unknown_error())
+        }
+    });
+}
+
+
+
+function getprofile(headers, body, userdata) {
+    return new Promise(function async(resolve, reject) {
+        try {
+            user = userdata[0]
+            resolve(responses.data_insertion_successfully('Contacts  list get successfully', user))
+        } catch (err) {
+            reject(responses.unknown_error())
+        }
+    });
+}
+
+
+function editprofile(headers, body, userdata) {
+    return new Promise(function async(resolve, reject) {
+        try {
+
+            userModel.findOneAndUpdate({ _id: userdata[0]._id }, { $set: { email: body.email, name: body.name, image: body.image } }, { new: true }, function (uperr, upresult) {
+                if (uperr) reject(responses.unknown_error())
+                resolve(responses.verification_successfully('Login successfully', upresult))
+            })
         } catch (err) {
             reject(responses.unknown_error())
         }
