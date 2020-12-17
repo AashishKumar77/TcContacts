@@ -71,7 +71,11 @@ function editprofile(headers, body, userdata) {
 
             userModel.findOneAndUpdate({ _id: userdata[0]._id }, { $set: { email: body.email, name: body.name, image: body.image } }, { new: true }, function (uperr, upresult) {
                 if (uperr) reject(responses.unknown_error())
-                resolve(responses.verification_successfully('Edit Profile successfully', upresult))
+                userModel.findOne({ _id: userdata[0]._id }, function (err, result) {
+
+                    resolve(responses.verification_successfully('Edit Profile successfully', result))
+
+                })
             })
         } catch (err) {
             reject(responses.unknown_error())
