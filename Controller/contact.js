@@ -8,7 +8,7 @@ ObjectId = require('mongodb').ObjectID;
 
 let _ = require('underscore');
 module.exports = {
-    addContact, getContact, editContact
+    addContact, getContact, editContact, deleteContact
 }
 
 
@@ -50,7 +50,7 @@ function getContact(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let userId = userdata[0]._id
-            contactModel.find({ userId: userId }, function (err, res) {
+            contactModel.find({ userId: userId, isDeleted: false }, function (err, res) {
                 console.log(err, res)
                 if (res.length > 0) {
                     resolve(responses.data_insertion_successfully('Contacts  list get successfully', res))
@@ -89,6 +89,27 @@ function editContact(headers, body, userdata) {
             }
             contactModel.updateOne({ _id: body.id }, data, function (err, res) {
                 resolve(responses.data_insertion_successfully('Contact update successfully'))
+
+            })
+
+
+
+        } catch (err) {
+            reject(responses.unknown_error())
+
+        }
+    })
+}
+
+function deleteContact(headers, body, userdata) {
+    return new Promise(function async(resolve, reject) {
+        try {
+            let userId = userdata[0]._id
+            data = {
+                isDeleted: true
+            }
+            contactModel.updateOne({ _id: body.id }, data, function (err, res) {
+                resolve(responses.data_insertion_successfully('Contact delete successfully'))
 
             })
 

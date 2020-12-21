@@ -136,4 +136,27 @@ router.put('/editprofile', upload.single('image'), commonFunctions.userTokenVali
         });
     }
 });
+
+
+
+/**
+ * ===========dDelete conatt
+ */
+router.delete('/deleteContact', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        contactController.deleteContact(req.headers, req.body, req.body.userdata).then(function (deleteContact) {
+            res.status(200).send(deleteContact);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
 module.exports = router
