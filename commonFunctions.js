@@ -1,13 +1,15 @@
-var crypto = require('crypto');
+var CryptoJS = require("crypto-js");
 var usermodel = require('./Models/userModel');
 ObjectId = require('mongodb').ObjectID;
+var AES = require("crypto-js/aes");
+var SHA256 = require("crypto-js/sha256");
 //==========get random genrate function =================
 function randomNumberGenrate() {
     var random_num = Math.floor(Math.random() * 900000) + 100000,
         de_token = random_num.toString(),
-        mykey = crypto.createCipher('aes-128-cbc', 'token'),
-        token_en = mykey.update(de_token, 'utf8', 'hex') + mykey.final('hex');
-    return token_en;
+        token = CryptoJS.AES.encrypt(JSON.stringify(de_token), 'secret key 1234567abc').toString();
+
+    return token;
 }
 //==========get random genrate function =================
 
