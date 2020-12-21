@@ -19,28 +19,29 @@ function login(headers, body, userdata) {
             } else if (body.type == "" || body.type == undefined) {
                 reject(responses.required_fields("Unique Id is not to be empty"));
             }
-            let criteria = { uniqueId: body.uniqueId }
+            let criteria = { uniqueId: body.uniqueId, }
             let payloadData = { token: CommonFunction.randomNumberGenrate(), type: body.type }
-            userModel.findOne(criteria, function (err, result) {
-                if (err) reject(responses.unknown_error())
-                else if (result != null) {
-                    console.log(result, "result")
-                    userModel.findOneAndUpdate(criteria, { $set: payloadData }, { new: true }, function (uperr, upresult) {
-                        if (uperr) reject(responses.unknown_error())
-                        resolve(responses.verification_successfully('Login successfully', upresult))
-                    })
-                }
-                let User = new userModel({
-                    uniqueId: body.uniqueId,
-                    token: CommonFunction.randomNumberGenrate(),
-                    type: body.type
-                })
-                User.save().then(res => {
-                    resolve(responses.verification_successfully('Login successfully', res))
-                }).catch(err => {
-                    console.log(err, "--err")
-                    reject(responses.unknown_error())
-                })
+            userModel.findOne({ uniqueId: body.uniqueId, type: body.type }, function (err, result) {
+                console.log(err, result, "err, result")
+                // if (err) reject(responses.unknown_error())
+                // else if (result != null) {
+                //     console.log(result, "result")
+                //     userModel.findOneAndUpdate(criteria, { $set: payloadData }, { new: true }, function (uperr, upresult) {
+                //         if (uperr) reject(responses.unknown_error())
+                //         resolve(responses.verification_successfully('Login successfully', upresult))
+                //     })
+                // }
+                // let User = new userModel({
+                //     uniqueId: body.uniqueId,
+                //     token: CommonFunction.randomNumberGenrate(),
+                //     type: body.type
+                // })
+                // User.save().then(res => {
+                //     resolve(responses.verification_successfully('Login successfully', res))
+                // }).catch(err => {
+                //     console.log(err, "--err")
+                //     reject(responses.unknown_error())
+                // })
             })
 
 
