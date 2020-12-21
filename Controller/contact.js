@@ -28,7 +28,7 @@ function addContact(headers, body, userdata) {
                 notes: body.notes,
                 image: body.image,
                 userId: userId,
-                bdcolor: body.bgcolor
+                bgcolor: body.bgcolor
             });
             contact.save().then(res => {
                 resolve(responses.data_insertion_successfully('Contact Saved successfully', res))
