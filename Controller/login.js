@@ -23,25 +23,27 @@ function login(headers, body, userdata) {
             let payloadData = { token: CommonFunction.randomNumberGenrate(), type: body.type }
             userModel.findOne({ uniqueId: body.uniqueId, type: body.type }, function (err, result) {
                 console.log(err, result, "err, result")
-                // if (err) reject(responses.unknown_error())
-                // else if (result != null) {
-                //     console.log(result, "result")
-                //     userModel.findOneAndUpdate(criteria, { $set: payloadData }, { new: true }, function (uperr, upresult) {
-                //         if (uperr) reject(responses.unknown_error())
-                //         resolve(responses.verification_successfully('Login successfully', upresult))
-                //     })
-                // }
-                // let User = new userModel({
-                //     uniqueId: body.uniqueId,
-                //     token: CommonFunction.randomNumberGenrate(),
-                //     type: body.type
-                // })
-                // User.save().then(res => {
-                //     resolve(responses.verification_successfully('Login successfully', res))
-                // }).catch(err => {
-                //     console.log(err, "--err")
-                //     reject(responses.unknown_error())
-                // })
+                if (err) reject(responses.unknown_error())
+                else if (typeof result != null) {
+                    console.log(result, "result")
+                    userModel.findOneAndUpdate(criteria, { $set: payloadData }, { new: true }, function (uperr, upresult) {
+                        if (uperr) reject(responses.unknown_error())
+                        resolve(responses.verification_successfully('Login successfully', upresult))
+                    })
+                } else {
+                    let User = new userModel({
+                        uniqueId: body.uniqueId,
+                        token: CommonFunction.randomNumberGenrate(),
+                        type: body.type
+                    })
+                    User.save().then(res => {
+                        resolve(responses.verification_successfully('Login successfully', res))
+                    }).catch(err => {
+                        console.log(err, "--err")
+                        reject(responses.unknown_error())
+                    })
+                }
+
             })
 
 
