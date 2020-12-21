@@ -85,7 +85,7 @@ function editContact(headers, body, userdata) {
                 notes: body.notes,
                 image: body.image,
                 userId: userId,
-                bdcolor: body.bgcolor
+                bgcolor: body.bgcolor
             }
             contactModel.updateOne({ _id: body.id }, data, function (err, res) {
                 resolve(responses.data_insertion_successfully('Contact update successfully'))

@@ -8,7 +8,6 @@ function randomNumberGenrate() {
     var random_num = Math.floor(Math.random() * 900000) + 100000,
         de_token = random_num.toString(),
         token = CryptoJS.AES.encrypt(JSON.stringify(de_token), 'secret key 1234567abc').toString();
-
     return token;
 }
 //==========get random genrate function =================
