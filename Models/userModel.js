@@ -37,10 +37,27 @@ var user = new Schema({
         type: String,
         default: ""
     },
+    info: {
+        type: String,
+
+    },
+    characterstics: {
+        type: String,
+
+    },
+    knowfrom: {
+        type: String,
+
+    },
     image: {
         type: String,
         default: ""
     },
+    notes: {
+        type: String,
+
+    },
+
 },
     {
         versionKey: false, // You should be aware of the outcome after set to false

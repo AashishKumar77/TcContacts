@@ -72,15 +72,29 @@ function getprofile(headers, body, userdata) {
 function editprofile(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
+            var data = {
+                characterstics: body.characterstics,
+                knowfrom: body.knowfrom,
+                info: body.info,
+                notes: body.notes,
+                image: body.image,
+            }
+            userModel.findOneAndUpdate({ _id: userdata[0]._id },
+                {
+                    $set: {
+                        email: body.email, name: body.name, characterstics: body.characterstics,
+                        knowfrom: body.knowfrom,
+                        info: body.info,
+                        notes: body.notes,
+                        image: body.image
+                    }
+                }, { new: true }, function (uperr, upresult) {
+                    if (uperr) reject(responses.unknown_error())
+                    userModel.findOne({ _id: userdata[0]._id }, function (err, result) {
+                        resolve(responses.data_insertion_successfully('Edit Profile successfully', result))
 
-            userModel.findOneAndUpdate({ _id: userdata[0]._id }, { $set: { email: body.email, name: body.name, image: body.image } }, { new: true }, function (uperr, upresult) {
-                if (uperr) reject(responses.unknown_error())
-                userModel.findOne({ _id: userdata[0]._id }, function (err, result) {
-
-                    resolve(responses.verification_successfully('Edit Profile successfully', result))
-
+                    })
                 })
-            })
         } catch (err) {
             reject(responses.unknown_error())
         }
