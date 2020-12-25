@@ -34,7 +34,9 @@ function login(headers, body, userdata) {
                     let User = new userModel({
                         uniqueId: body.uniqueId,
                         token: CommonFunction.randomNumberGenrate(),
-                        type: body.type
+                        type: body.type,
+                        email: body.email,
+                        name: body.name
                     })
                     User.save().then(res => {
                         resolve(responses.verification_successfully('Login successfully', res))
