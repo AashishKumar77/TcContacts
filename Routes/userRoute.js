@@ -7,6 +7,7 @@ var express = require('express'),
     upload = multer({});
 var RegisterLoginController = require('../Controller/login');
 var contactController = require('../Controller/contact');
+let catgoryController = require('../Controller/category');
 
 /**=================Social Login Register api============== */
 
@@ -24,6 +25,146 @@ router.post('/login', upload.single('image'), function (req, res, next) {
 /**=================Social Login Register api============== */
 
 
+
+/**
+ * ================Add category ===============================
+ */
+router.post('/category', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        catgoryController.addCategory(req.headers, req.body, req.body.userdata).then(function (addCategory) {
+            res.status(200).send(addCategory);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**
+ * =========================================================
+ */
+
+/**
+ * ==============get category ====================
+ */
+router.get('/category', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        catgoryController.getCategory(req.headers, req.body, req.body.userdata).then(function (getCategory) {
+            res.status(200).send(getCategory);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**
+ * =================================================
+ */
+/**===============edit category====================== */
+router.put('/category', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        catgoryController.editCategory(req.headers, req.body, req.body.userdata).then(function (editCategory) {
+            res.status(200).send(editCategory);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**
+ * ====================================================
+ */
+
+
+/**================add/ remove people from data  */
+router.put('/addremovepeople', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        catgoryController.addremovepeople(req.headers, req.body, req.body.userdata).then(function (addremovepeople) {
+            res.status(200).send(addremovepeople);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+
+/**=============================================== */
+
+
+/**
+ * ==========get category details ======================
+ */
+
+router.post('/categorydetails', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        catgoryController.categorydetails(req.headers, req.body, req.body.userdata).then(function (categorydetails) {
+            res.status(200).send(categorydetails);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**
+ * ========get catgoey details ========================
+ */
+/**
+ * ===========delete category ==============
+ */
+router.delete('/category', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        catgoryController.deleteCategory(req.headers, req.body, req.body.userdata).then(function (deleteCategory) {
+            res.status(200).send(deleteCategory);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**
+ * =======================
+ */
 /**
  * =======================Add contact ===============
  * 
