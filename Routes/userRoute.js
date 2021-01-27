@@ -165,6 +165,45 @@ router.delete('/category', upload.single('image'), commonFunctions.userTokenVali
 /**
  * =======================
  */
+
+/**==================Fav Contact ====================== */
+router.put('/favContact', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        contactController.favContact(req.headers, req.body, req.body.userdata).then(function (favContact) {
+            res.status(200).send(favContact);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**================Fav Contact ========================= */
+/**=====================Get Fav.===================== */
+router.get('/getfavContact', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        contactController.getfavContact(req.headers, req.body, req.body.userdata).then(function (getfavContact) {
+            res.status(200).send(getfavContact);
+        }, function (err) {
+            res.status(400).send(err);
+        }).catch(function (e) {
+            console.log('500 error', err);
+            res.status(500).send(e);
+        });
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
+/**================================================= */
 /**
  * =======================Add contact ===============
  * 

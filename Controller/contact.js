@@ -8,10 +8,49 @@ ObjectId = require('mongodb').ObjectID;
 
 let _ = require('underscore');
 module.exports = {
-    addContact, getContact, editContact, deleteContact
+    addContact, getContact, editContact, deleteContact, favContact, getfavContact
+}
+function getfavContact(headers, body, userdata) {
+    return new Promise(function async(resolve, reject) {
+        try {
+
+            let userId = userdata[0]._id
+
+            contactModel.find({ userId: userId, fav: true }, function (err, res) {
+                resolve(responses.data_insertion_successfully('fav Contact Successfully', res))
+            })
+        } catch (err) {
+            console.log(err, "---error")
+            reject(responses.unknown_error())
+
+        }
+    })
 }
 
+function favContact(headers, body, userdata) {
+    return new Promise(function async(resolve, reject) {
+        try {
+            if (body.type == 1) {
+                data = {
+                    fav: true
+                }
+            } else {
+                data = {
+                    fav: false
+                }
+            }
+            let userId = userdata[0]._id
 
+            contactModel.updateOne({ _id: body.id }, data, function (err, res) {
+                resolve(responses.data_insertion_successfully('Contact Add to fav. Successfully'))
+            })
+        } catch (err) {
+            console.log(err, "---error")
+            reject(responses.unknown_error())
+
+        }
+    })
+}
 
 function addContact(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
