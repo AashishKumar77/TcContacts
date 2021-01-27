@@ -50,9 +50,7 @@ function addremovepeople(headers, body, userdata) {
                         } else {
 
                             peopleArray = body.people.split(',')
-
                             categoryModel.findOneAndUpdate(query, { $push: { people: peopleArray } }).exec(res => {
-
                                 resolve(responses.data_insertion_successfully("People Added Successfully!"))
                             })
                         }
@@ -190,10 +188,11 @@ function deleteCategory(headers, body, userdata) {
             data = {
                 isDeleted: true
             }
-            contactModel.updateOne({ _id: body.id }, data, function (err, res) {
+            categoryModel.updateOne({ _id: body.id }, data, function (err, res) {
                 resolve(responses.data_insertion_successfully('Category delete successfully'))
             })
         } catch (err) {
+            console.log(err, "---error")
             reject(responses.unknown_error())
 
         }
