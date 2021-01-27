@@ -39,6 +39,7 @@ function addremovepeople(headers, body, userdata) {
                 if (itErr) {
                     reject(responses.unknown_error("Invalid id"))
                 } else {
+                    let Array = []
                     let peopleArray = body.people.split(',');
                     if (body.type == 1) {
                         //Add people 
@@ -47,8 +48,11 @@ function addremovepeople(headers, body, userdata) {
                                 resolve(responses.data_insertion_successfully("People Added Successfully!"))
                             })
                         } else {
-                            Result.people.push(body.people)
-                            categoryModel.findOneAndUpdate(query, { $set: { people: Result.people, userId: userId } }).exec(res => {
+
+                            peopleArray = body.people.split(',')
+
+                            categoryModel.findOneAndUpdate(query, { $push: { people: peopleArray } }).exec(res => {
+
                                 resolve(responses.data_insertion_successfully("People Added Successfully!"))
                             })
                         }
@@ -93,6 +97,7 @@ function addremovepeople(headers, body, userdata) {
                 }
             })
         } catch (err) {
+
             reject(responses.unknown_error())
 
         }

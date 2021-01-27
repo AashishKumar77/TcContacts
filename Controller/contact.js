@@ -34,10 +34,12 @@ function addContact(headers, body, userdata) {
                 resolve(responses.data_insertion_successfully('Contact Saved successfully', res))
 
             }).catch(err => {
+                console.log(err, "---error")
                 reject(responses.unknown_error())
 
             })
         } catch (err) {
+            console.log(err, "---error")
             reject(responses.unknown_error())
 
         }
@@ -50,7 +52,8 @@ function getContact(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let userId = userdata[0]._id
-            contactModel.find({ userId: userId, isDeleted: false }, function (err, res) {
+
+            contactModel.find({ userId: userId, isDeleted: false }).exec(function (err, res) {
                 console.log(err, res)
                 if (res.length > 0) {
                     resolve(responses.data_insertion_successfully('Contacts  list get successfully', res))
