@@ -43,17 +43,17 @@ function addremovepeople(headers, body, userdata) {
                     let peopleArray = body.people.split(',');
                     if (body.type == 1) {
                         //Add people 
-                        if (Result.people.length == 0) {
-                            categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }).exec(res => {
-                                resolve(responses.data_insertion_successfully("People Added Successfully!"))
-                            })
-                        } else {
-
-                            peopleArray = body.people.split(',')
-                            categoryModel.findOneAndUpdate(query, { $push: { people: peopleArray } }).exec(res => {
-                                resolve(responses.data_insertion_successfully("People Added Successfully!"))
-                            })
-                        }
+                        // if (Result.people.length == 0) {
+                        //     categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }).exec(res => {
+                        //         resolve(responses.data_insertion_successfully("People Added Successfully!"))
+                        //     })
+                        // } else {
+                        console.log(peopleArray, "peopleArray")
+                        peopleArray = body.people.split(',')
+                        categoryModel.findOneAndUpdate(query, { $push: { people: peopleArray } }).exec(res => {
+                            resolve(responses.data_insertion_successfully("People Added Successfully!"))
+                        })
+                        // }
 
 
                     } else if (body.type == 0) {
