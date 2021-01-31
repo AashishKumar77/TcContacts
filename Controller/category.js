@@ -44,16 +44,17 @@ function addremovepeople(headers, body, userdata) {
                     console.log(peopleArray.length, "--")
                     if (body.type == 1) {
                         //Add people 
-                        // if (Result.people.length == 0) {
-                        //     categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }).exec(res => {
-                        //         resolve(responses.data_insertion_successfully("People Added Successfully!"))
-                        //     })
-                        // } else {
                         console.log(peopleArray, "peopleArray")
-                        peopleArray = body.people.split(',')
-                        categoryModel.findOneAndUpdate(query, { $addToSet: { people: peopleArray } }, { upsert: true }).exec(res => {
+                        // if (Result.people.length == 0) {
+                        categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }).exec(res => {
                             resolve(responses.data_insertion_successfully("People Added Successfully!"))
                         })
+                        // } else {
+                        // console.log(peopleArray, "peopleArray")
+                        // peopleArray = body.people.split(',')
+                        // categoryModel.findOneAndUpdate(query, { $addToSet: { people: peopleArray } }, { upsert: true }).exec(res => {
+                        //     resolve(responses.data_insertion_successfully("People Added Successfully!"))
+                        // })
                         // }
 
 
