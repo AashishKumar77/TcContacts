@@ -50,10 +50,10 @@ function addremovepeople(headers, body, userdata) {
                         //Add people 
                         console.log(peopleArray, "peopleArray")
                         // if (Result.people.length == 0) {
-                        // categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }, { new: true }).exec(res => {
-                        //     console.log(res, "---")
-                        //     resolve(responses.data_insertion_successfully("People Added Successfully!"))
-                        // })
+                        categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }, { new: true }).exec(res => {
+                            console.log(res, "---")
+                            resolve(responses.data_insertion_successfully("People Added Successfully!"))
+                        })
                         // } else {
                         // console.log(peopleArray, "peopleArray")
                         // peopleArray = body.people.split(',')
