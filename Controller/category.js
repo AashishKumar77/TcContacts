@@ -50,7 +50,7 @@ function addremovepeople(headers, body, userdata) {
                         // } else {
                         console.log(peopleArray, "peopleArray")
                         peopleArray = body.people.split(',')
-                        categoryModel.findOneAndUpdate(query, { $push: { people: peopleArray } }).exec(res => {
+                        categoryModel.findOneAndUpdate(query, { $addToSet: { people: peopleArray } }, { upsert: true }).exec(res => {
                             resolve(responses.data_insertion_successfully("People Added Successfully!"))
                         })
                         // }
