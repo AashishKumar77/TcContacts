@@ -41,12 +41,12 @@ function addremovepeople(headers, body, userdata) {
                 } else {
                     let Array = []
                     let peopleArray = body.people.split(',');
-                    console.log(peopleArray.length, "--")
+
+                    console.log(peopleArray.length, "--", peopleArray, "-----", body.people.split(','))
                     if (peopleArray.length == 1) {
                         peopleArray = []
-                    } else {
-                        peopleArray = body.people.split(',');
                     }
+                    console.log(peopleArray.length, "--", peopleArray)
                     if (body.type == 1) {
                         //Add people 
                         console.log(peopleArray, "peopleArray")
