@@ -51,10 +51,8 @@ function addremovepeople(headers, body, userdata) {
 
                     if (body.type == 1) {
                         //Add people 
-                        console.log(peopleArray, "peopleArray")
                         // if (Result.people.length == 0) {
                         categoryModel.findOneAndUpdate(query, { $set: { people: peopleArray, userId: userId } }, { new: true }).exec(res => {
-                            console.log(res, "---")
                             resolve(responses.data_insertion_successfully("People Added Successfully!"))
                         })
                         // } else {
@@ -115,18 +113,25 @@ function addCategory(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let userId = userdata[0]._id
-            var category = new categoryModel({
-                title: body.title,
-                userId: userId,
-                bgcolor: body.bgcolor
-            });
-            category.save().then(res => {
-                resolve(responses.data_insertion_successfully('Catgory Saved successfully', res))
+            categoryModel.findOne({ title: body.title }, function (error, findResut) {
+                if (findResut == null) {
+                    var category = new categoryModel({
+                        title: body.title,
+                        userId: userId,
+                        bgcolor: body.bgcolor
+                    });
+                    category.save().then(res => {
+                        resolve(responses.data_insertion_successfully('Catgory Saved successfully', res))
 
-            }).catch(err => {
-                reject(responses.unknown_error())
+                    }).catch(err => {
+                        reject(responses.unknown_error())
 
+                    })
+                } else {
+                    reject(responses.data_insertion_successfully('Catgory already Exist'))
+                }
             })
+
         } catch (err) {
             reject(responses.unknown_error())
 
@@ -176,14 +181,22 @@ function editCategory(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let userId = userdata[0]._id
-            var data = {
-                title: body.title,
-                bgcolor: body.bgcolor
-            }
-            categoryModel.updateOne({ _id: body.id }, data, function (err, res) {
-                console.log(err, res, "err, res")
-                resolve(responses.data_insertion_successfully('Category update successfully'))
-            })
+            categoryModel.findOne({ _id: { $ne: body.id }, title: body.title }, function (error, findResut) {
+
+                if (findResut == null) {
+                    var data = {
+                        title: body.title,
+                        bgcolor: body.bgcolor
+                    }
+                    categoryModel.updateOne({ _id: body.id }, data, function (err, res) {
+                        console.log(err, res, "err, res")
+                        resolve(responses.data_insertion_successfully('Category update successfully'))
+                    })
+                } else {
+                    reject(responses.data_insertion_successfully('Catgory already Exist'))
+                }
+            });
+
         } catch (err) {
             reject(responses.unknown_error())
 
