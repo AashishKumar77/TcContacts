@@ -113,7 +113,7 @@ function addCategory(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let userId = userdata[0]._id
-            categoryModel.findOne({ title: body.title, userId: userId }, function (error, findResut) {
+            categoryModel.findOne({ title: body.title, userId: userId, isDeleted: false }, function (error, findResut) {
                 if (findResut == null) {
                     var category = new categoryModel({
                         title: body.title,
@@ -181,7 +181,7 @@ function editCategory(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let userId = userdata[0]._id
-            categoryModel.findOne({ _id: { $ne: body.id }, title: body.title, userId: userId }, function (error, findResut) {
+            categoryModel.findOne({ _id: { $ne: body.id }, title: body.title, userId: userId, isDeleted: false }, function (error, findResut) {
 
                 if (findResut == null) {
                     var data = {
