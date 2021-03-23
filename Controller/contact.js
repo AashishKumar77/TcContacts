@@ -120,9 +120,7 @@ function editContact(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
             let fileUrl = '';
-            if (file !== undefined) {
-                fileUrl = `http://13.58.174.221:3000/${file.originalname}`
-            }
+
             let userId = userdata[0]._id
             var data = {
                 name: body.name,
@@ -133,9 +131,11 @@ function editContact(headers, body, userdata) {
                 knowfrom: body.knowfrom,
                 info: body.info,
                 notes: body.notes,
-                image: fileUrl,
                 userId: userId,
                 bgcolor: body.bgcolor
+            }
+            if (file !== undefined) {
+                data.image = `http://13.58.174.221:3000/${file.originalname}`
             }
             contactModel.updateOne({ _id: body.id }, data, function (err, res) {
                 resolve(responses.data_insertion_successfully('Contact update successfully'))
