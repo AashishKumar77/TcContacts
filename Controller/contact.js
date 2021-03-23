@@ -52,9 +52,13 @@ function favContact(headers, body, userdata) {
     })
 }
 
-function addContact(headers, body, userdata) {
+function addContact(headers, body, userdata, file) {
     return new Promise(function async(resolve, reject) {
         try {
+            let fileUrl = '';
+            if (file !== undefined) {
+                fileUrl = `http://13.58.174.221:3000/${file.originalname}`
+            }
             let userId = userdata[0]._id
             var contact = new contactModel({
                 name: body.name,
@@ -65,7 +69,7 @@ function addContact(headers, body, userdata) {
                 knowfrom: body.knowfrom,
                 info: body.info,
                 notes: body.notes,
-                image: body.image,
+                image: fileUrl,
                 userId: userId,
                 bgcolor: body.bgcolor
             });
@@ -115,6 +119,10 @@ function getContact(headers, body, userdata) {
 function editContact(headers, body, userdata) {
     return new Promise(function async(resolve, reject) {
         try {
+            let fileUrl = '';
+            if (file !== undefined) {
+                fileUrl = `http://13.58.174.221:3000/${file.originalname}`
+            }
             let userId = userdata[0]._id
             var data = {
                 name: body.name,
@@ -125,7 +133,7 @@ function editContact(headers, body, userdata) {
                 knowfrom: body.knowfrom,
                 info: body.info,
                 notes: body.notes,
-                image: body.image,
+                image: fileUrl,
                 userId: userId,
                 bgcolor: body.bgcolor
             }

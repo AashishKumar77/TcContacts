@@ -58,7 +58,6 @@ var Contact = new Schema({
     },
     image: {
         type: String,
-        default: ""
     },
 },
     {

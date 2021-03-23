@@ -9,6 +9,16 @@ var RegisterLoginController = require('../Controller/login');
 var contactController = require('../Controller/contact');
 let catgoryController = require('../Controller/category');
 
+var storage1 = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+var upload_profile = multer({ storage: storage1, limits: { fileSize: 1024 * 1024 * 50 } });
 /**=================Social Login Register api============== */
 
 router.post('/login', upload.single('image'), function (req, res, next) {
@@ -208,9 +218,10 @@ router.get('/getfavContact', upload.single('image'), commonFunctions.userTokenVa
  * =======================Add contact ===============
  * 
  */
-router.post('/addContact', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+router.post('/addContact', upload_profile.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
     if (req.body.userdata != undefined) {
-        contactController.addContact(req.headers, req.body, req.body.userdata).then(function (addContact) {
+        console.log(req.file, "---req.files", req.files)
+        contactController.addContact(req.headers, req.body, req.body.userdata, req.file).then(function (addContact) {
             res.status(200).send(addContact);
         }, function (err) {
             res.status(400).send(err);
@@ -255,9 +266,9 @@ router.get('/getContact', upload.single('image'), commonFunctions.userTokenValid
  */
 
 
-router.put('/editContact', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+router.put('/editContact', upload_profile.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
     if (req.body.userdata != undefined) {
-        contactController.editContact(req.headers, req.body, req.body.userdata).then(function (editContact) {
+        contactController.editContact(req.headers, req.body, req.body.userdata, req.file).then(function (editContact) {
             res.status(200).send(editContact);
         }, function (err) {
             res.status(400).send(err);
