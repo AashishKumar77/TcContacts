@@ -57,7 +57,7 @@ function addContact(headers, body, userdata, file) {
         try {
             let fileUrl = '';
             if (file !== undefined) {
-                fileUrl = `http://13.58.174.221:3000/${file.originalname}`
+                fileUrl = `http://13.58.174.221/${file.originalname}`
             }
             let userId = userdata[0]._id
             var contact = new contactModel({
@@ -135,7 +135,7 @@ function editContact(headers, body, userdata) {
                 bgcolor: body.bgcolor
             }
             if (file !== undefined) {
-                data.image = `http://13.58.174.221:3000/${file.originalname}`
+                data.image = `http://13.58.174.221/${file.originalname}`
             }
             contactModel.updateOne({ _id: body.id }, data, function (err, res) {
                 resolve(responses.data_insertion_successfully('Contact update successfully'))
