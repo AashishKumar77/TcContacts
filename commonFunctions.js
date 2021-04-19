@@ -10,6 +10,8 @@ function randomNumberGenrate() {
         token = CryptoJS.AES.encrypt(JSON.stringify(de_token), 'secret key 1234567abc').toString();
     return token;
 }
+
+const local = "http://localhost/";
 //==========get random genrate function =================
 
 //===========passes the data in each function==============

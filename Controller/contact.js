@@ -116,7 +116,7 @@ function getContact(headers, body, userdata) {
 }
 
 
-function editContact(headers, body, userdata) {
+function editContact(headers, body, userdata, file) {
     return new Promise(function async(resolve, reject) {
         try {
             let fileUrl = '';
