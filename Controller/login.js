@@ -71,25 +71,21 @@ function getprofile(headers, body, userdata) {
 }
 
 
-function editprofile(headers, body, userdata) {
+function editprofile(headers, body, userdata, file) {
     return new Promise(function async(resolve, reject) {
         try {
             var data = {
-                characterstics: body.characterstics,
+                email: body.email, name: body.name, characterstics: body.characterstics,
                 knowfrom: body.knowfrom,
                 info: body.info,
                 notes: body.notes,
-                image: body.image,
+            }
+            if (file !== undefined) {
+                data.image = `http://13.58.174.221/${file.originalname}`
             }
             userModel.findOneAndUpdate({ _id: userdata[0]._id },
                 {
-                    $set: {
-                        email: body.email, name: body.name, characterstics: body.characterstics,
-                        knowfrom: body.knowfrom,
-                        info: body.info,
-                        notes: body.notes,
-                        image: body.image
-                    }
+                    $set: data
                 }, { new: true }, function (uperr, upresult) {
                     if (uperr) reject(responses.unknown_error())
                     userModel.findOne({ _id: userdata[0]._id }, function (err, result) {

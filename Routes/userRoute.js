@@ -310,9 +310,9 @@ router.get('/getprofile', upload.single('image'), commonFunctions.userTokenValid
  * =============edit profile =================
  */
 
-router.put('/editprofile', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+router.put('/editprofile', upload_profile.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
     if (req.body.userdata != undefined) {
-        RegisterLoginController.editprofile(req.headers, req.body, req.body.userdata).then(function (editprofile) {
+        RegisterLoginController.editprofile(req.headers, req.body, req.body.userdata, req.file).then(function (editprofile) {
             res.status(200).send(editprofile);
         }, function (err) {
             res.status(400).send(err);
