@@ -17,7 +17,7 @@ function categorydetails(headers, body, userdata) {
         try {
             let userId = userdata[0]._id
             var query = { _id: body.catid }
-            categoryModel.findOne(query).populate({ path: 'people', isDeleted: false }).exec((itErr, Result) => {
+            categoryModel.findOne(query).populate({ path: 'people', match: { isDeleted: false } }).exec((itErr, Result) => {
                 if (itErr) {
                     reject(responses.unknown_error("Invalid id"))
                 } else {
