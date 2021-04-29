@@ -16,7 +16,7 @@ function getfavContact(headers, body, userdata) {
 
             let userId = userdata[0]._id
 
-            contactModel.find({ userId: userId, fav: true }, function (err, res) {
+            contactModel.find({ userId: userId, fav: true, isDeleted: false }, function (err, res) {
                 resolve(responses.data_insertion_successfully('fav Contact Successfully', res))
             })
         } catch (err) {
@@ -139,7 +139,6 @@ function editContact(headers, body, userdata, file) {
             }
             contactModel.updateOne({ _id: body.id }, data, function (err, res) {
                 resolve(responses.data_insertion_successfully('Contact update successfully'))
-
             })
 
 

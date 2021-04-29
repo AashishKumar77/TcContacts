@@ -17,7 +17,7 @@ function categorydetails(headers, body, userdata) {
         try {
             let userId = userdata[0]._id
             var query = { _id: body.catid }
-            categoryModel.findOne(query).populate('people').exec((itErr, Result) => {
+            categoryModel.findOne(query).populate({ path: 'people', isDeleted: false }).exec((itErr, Result) => {
                 if (itErr) {
                     reject(responses.unknown_error("Invalid id"))
                 } else {
@@ -146,7 +146,6 @@ function getCategory(headers, body, userdata) {
         try {
             let userId = userdata[0]._id
             categoryModel.find({ userId: userId, isDeleted: false }, function (err, res) {
-                console.log(err, res)
                 if (res.length > 0) {
                     array = []
                     res.map((it, index) => {
