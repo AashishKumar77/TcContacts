@@ -79,6 +79,7 @@ function editprofile(headers, body, userdata, file) {
                 knowfrom: body.knowfrom,
                 info: body.info,
                 notes: body.notes,
+                avatarType:body.avatarType
             }
             if (file !== undefined) {
                 data.image = `http://13.58.174.221/${file.originalname}`

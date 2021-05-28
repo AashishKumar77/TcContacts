@@ -12,6 +12,10 @@ var Contact = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user',
     },
+    avatarType: {
+        type: String,
+        default: ''
+    },
     email: {
         type: String,
         default: ''

@@ -71,7 +71,8 @@ function addContact(headers, body, userdata, file) {
                 notes: body.notes,
                 image: fileUrl,
                 userId: userId,
-                bgcolor: body.bgcolor
+                bgcolor: body.bgcolor,
+                avatarType:body.avatarType
             });
             contact.save().then(res => {
                 resolve(responses.data_insertion_successfully('Contact Saved successfully', res))
@@ -132,7 +133,8 @@ function editContact(headers, body, userdata, file) {
                 info: body.info,
                 notes: body.notes,
                 userId: userId,
-                bgcolor: body.bgcolor
+                bgcolor: body.bgcolor,
+                avatarType:body.avatarType
             }
             if (file !== undefined) {
                 data.image = `http://13.58.174.221/${file.originalname}`

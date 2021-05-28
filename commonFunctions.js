@@ -40,7 +40,8 @@ function eachData(val, userId, data) {
         "_id": val._id,
         "categoryId": val.categoryId,
         "createdAt": val.createdAt,
-        "updatedAt": val.updatedAt
+        "updatedAt": val.updatedAt,
+        "avatarType":val.avatarType
     })
     return data
 }
