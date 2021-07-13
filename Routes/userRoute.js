@@ -80,6 +80,17 @@ router.get('/category', upload.single('image'), commonFunctions.userTokenValidat
         });
     }
 });
+
+router.put('/updatePlan', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+    if (req.body.userdata != undefined) {
+        console.log(req.body.userdata, "====")
+    } else {
+        res.status(404).json({
+            "status": "404",
+            "message": req.body.message
+        });
+    }
+});
 /**
  * =================================================
  */

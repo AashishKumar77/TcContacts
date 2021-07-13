@@ -21,6 +21,10 @@ var user = new Schema({
         type: String,
         default: ''
     },
+    avatarType: {
+        type: String,
+        default: ''
+    },
     phoneNumber: {
         type: String,
 
@@ -57,7 +61,11 @@ var user = new Schema({
         type: String,
 
     },
+    paymentStatus: {
+        type: String,
+        default: "0"
 
+    },
 },
     {
         versionKey: false, // You should be aware of the outcome after set to false
