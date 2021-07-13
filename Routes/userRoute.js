@@ -8,6 +8,7 @@ var express = require('express'),
 var RegisterLoginController = require('../Controller/login');
 var contactController = require('../Controller/contact');
 let catgoryController = require('../Controller/category');
+let userModel = require('../Models/userModel');
 
 var storage1 = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -81,9 +82,24 @@ router.get('/category', upload.single('image'), commonFunctions.userTokenValidat
     }
 });
 
-router.put('/updatePlan', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+router.post('/updatePlan', upload.single('image'), commonFunctions.userTokenValidation, function (req, res, next) {
+
     if (req.body.userdata != undefined) {
-        console.log(req.body.userdata, "====")
+        let user = req.body.userdata[0];
+        let paymentStatus;
+        if (user.paymentStatus == "0") {
+            paymentStatus = "1"
+        } else {
+            paymentStatus = "0"
+        }
+        userModel.updateOne({ _id: user._id }, { $set: { paymentStatus: paymentStatus } }, { new: true }, function (err, res) {
+            res.status(200).json({
+                "status": "200",
+                "message": "Plan Update successfully",
+                "paymntStatus": paymentStatus
+            });
+        })
+
     } else {
         res.status(404).json({
             "status": "404",
