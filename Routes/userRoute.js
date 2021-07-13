@@ -92,7 +92,7 @@ router.post('/updatePlan', upload.single('image'), commonFunctions.userTokenVali
         } else {
             paymentStatus = "0"
         }
-        userModel.updateOne({ _id: user._id }, { $set: { paymentStatus: paymentStatus } }, { new: true }, function (err, res) {
+        userModel.updateOne({ _id: user._id }, { $set: { paymentStatus: paymentStatus } }, { new: true }, function (err, resu) {
             res.status(200).json({
                 "status": "200",
                 "message": "Plan Update successfully",
